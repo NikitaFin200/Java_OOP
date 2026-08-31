@@ -4,9 +4,9 @@ import ru.academits.findyurov.Shape;
 
 import java.util.Comparator;
 
-public class ShapeAreaComparator implements Comparator<Shape> {
+public class ShapePerimeterComparator implements Comparator<Shape> {
     @Override
     public int compare(Shape shape1, Shape shape2) {
-        return Double.compare(shape1.getArea(), shape2.getArea());
+        return Double.compare(shape1.getPerimeter(), shape2.getPerimeter());
     }
 }
