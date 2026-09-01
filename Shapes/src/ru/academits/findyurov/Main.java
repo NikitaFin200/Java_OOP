@@ -1,4 +1,4 @@
-package ru.academits.findyurov.main;
+package ru.academits.findyurov;
 
 import ru.academits.findyurov.Shape;
 import ru.academits.findyurov.Circle;
