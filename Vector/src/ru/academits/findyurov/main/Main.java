@@ -4,7 +4,7 @@ import ru.academits.findyurov.Vector;
 
 import java.util.Arrays;
 
-public class Main {
+public class  Main {
     public static void main(String[] args) {
         Vector vector1 = new Vector(2);
         vector1.setCoordinate(0, 1);
