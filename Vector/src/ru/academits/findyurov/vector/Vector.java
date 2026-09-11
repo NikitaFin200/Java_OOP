@@ -1,4 +1,4 @@
-package ru.academits.findyurov.shapes;
+package ru.academits.findyurov.vector;
 
 import java.util.Arrays;
 
@@ -40,14 +40,15 @@ public class Vector {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("{");
+        stringBuilder.append('{');
+
         int maxIndex = coordinates.length - 1;
 
         for (int i = 0; i < maxIndex; i++) {
             stringBuilder.append(coordinates[i]).append(", ");
         }
 
-        stringBuilder.append(coordinates[maxIndex]).append("}");
+        stringBuilder.append(coordinates[maxIndex]).append('}');
         return stringBuilder.toString();
     }
 
@@ -132,8 +133,9 @@ public class Vector {
     }
 
     public static double getScalarProduct(Vector vector1, Vector vector2) {
+        int minSize = Math.min(vector1.coordinates.length, vector2.coordinates.length);
+
         double result = 0;
-        int minSize = Math.min(vector1.getSize(), vector2.getSize());
 
         for (int i = 0; i < minSize; ++i) {
             result += vector1.coordinates[i] * vector2.coordinates[i];

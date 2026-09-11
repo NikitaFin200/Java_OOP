@@ -1,8 +1,8 @@
-package ru.academits.findyurov.shapes.main;
+package ru.academits.findyurov.vector.main;
 
-import ru.academits.findyurov.shapes.Vector;
+import ru.academits.findyurov.vector.Vector;
 
-public class  Main {
+public class Main {
     public static void main(String[] args) {
         Vector vector1 = new Vector(2);
         vector1.setCoordinate(0, 1);

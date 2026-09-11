@@ -1,6 +1,6 @@
-package ru.academits.findyurov.shapes.range_main;
+package ru.academits.findyurov.range.range_main;
 
-import ru.academits.findyurov.shapes.range.Range;
+import ru.academits.findyurov.range.range.Range;
 
 import java.util.Arrays;
 
