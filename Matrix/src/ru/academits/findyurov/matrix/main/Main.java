@@ -34,12 +34,16 @@ public class Main {
         System.out.println();
 
         Matrix matrix3 = new Matrix(matrix2);
-        System.out.println("Copy Constructor(academ.findyurov.matrixArray.Matrix 3):");
+        System.out.println("Matrix2 equals matrix3: " + matrix2.equals(matrix3));
+        System.out.println("Matrix2 hashCode: " + matrix2.hashCode());
+        System.out.println("Matrix3 hashCode: " + matrix3.hashCode());
+
+        System.out.println("Copy Constructor(academ.findyurov.matrixArray.Matrix 3): ");
         System.out.println(matrix3);
         System.out.println();
 
         int i = 0;
-        System.out.println("Row number " + (i + 1) + ":");
+        System.out.println("Row number " + (i + 1) + ": ");
         System.out.println(matrix2.getRow(i));
         System.out.println();
 
@@ -53,7 +57,7 @@ public class Main {
         System.out.println();
 
         i = 1;
-        System.out.println("Column number" + (i + 1) + ":");
+        System.out.println("Column number" + (i + 1) + ": ");
         System.out.println(matrix2.getColumn(i));
         System.out.println();
 
@@ -61,53 +65,53 @@ public class Main {
         System.out.println(matrix2);
         System.out.println();
 
-        System.out.println("Transform the matrixArray:");
+        System.out.println("Transform the matrixArray: ");
         matrix2.transpose();
         System.out.println(matrix2);
         System.out.println();
 
         double alpha = 6;
-        System.out.println("Multiply the matrixArray by a scalar:" + alpha);
+        System.out.println("Multiply the matrixArray by a scalar: " + alpha);
         matrix2.multiplyByScalar(alpha);
         System.out.println(matrix2);
         System.out.println();
 
         System.out.println("Multiplying a matrixArray by a vector");
-        Vector vector = new Vector(new double[]{0, 3, 0, 1, 4});
+        Vector vector = new Vector(new double[]{0, 3, 0, 1});
         System.out.println(vector + ":");
         Vector mulOnVec = matrix2.multiply(vector);
         System.out.println(mulOnVec);
         System.out.println();
 
-        System.out.println("A matrixArray created from an array of vectors:");
+        System.out.println("A matrixArray created from an array of vectors: ");
         Vector[] vectors = {new Vector(new double[]{1, 4, 2}), new Vector(new double[]{3, 6, 7})};
         Matrix matrix4 = new Matrix(vectors);
         System.out.println(matrix4);
 
-        System.out.println("Let's add the matrixArray 3 and 3 statically:");
+        System.out.println("Let's add the matrixArray 3 and 3 statically: ");
         Matrix matrix5 = Matrix.getSum(matrix3, matrix3);
         System.out.println(matrix5);
         System.out.println();
 
-        System.out.println("Subtract matrixArray 3 from matrixArray 3 (statically):");
+        System.out.println("Subtract matrixArray 3 from matrixArray 3 (statically): ");
         Matrix matrix6 = Matrix.getDifference(matrix3, matrix3);
         System.out.println(matrix6);
         System.out.println();
 
-        System.out.println("Let's add matrixArray 3 to matrixArray 3:");
+        System.out.println("Let's add matrixArray 3 to matrixArray 3: ");
         matrix3.add(matrix3);
-        System.out.println("Now matrixArray 3 has the form:");
+        System.out.println("Now matrixArray 3 has the form: ");
         System.out.println(matrix3);
         System.out.println();
 
-        System.out.println("Now we subtract matrixArray 3 from the new matrixArray 3:");
+        System.out.println("Now we subtract matrixArray 3 from the new matrixArray 3: ");
         matrix3.subtract(matrix3);
-        System.out.println("Now matrixArray 3 has the form:");
+        System.out.println("Now matrixArray 3 has the form: ");
         System.out.println(matrix3);
         System.out.println();
 
         System.out.println(matrix3);
-        System.out.println("Multiply the matrixArray (unit) by the matrixArray 3:");
+        System.out.println("Multiply the matrixArray (unit) by the matrixArray 3: ");
         matrix1 = new Matrix(new double[][]{
                 {5, 0, 0, 6},
                 {0, 1, 0, 0},

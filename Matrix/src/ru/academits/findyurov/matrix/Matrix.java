@@ -8,12 +8,12 @@ public class Matrix {
     public Matrix(int rowsQuantity, int columnsQuantity) {
         if (rowsQuantity <= 0) {
             throw new IllegalArgumentException("Incorrect rows quantity." +
-                    "The number must be greater than 0. Your value = " + rowsQuantity);
+                    "The number must be greater than 0. Specified value = " + rowsQuantity);
         }
 
         if (columnsQuantity <= 0) {
             throw new IllegalArgumentException("Incorrect columns quantity." +
-                    "The number must be greater than 0. Your value = " + rowsQuantity);
+                    "The number must be greater than 0. Specified value = " + columnsQuantity);
         }
 
         rows = new Vector[rowsQuantity];
@@ -36,8 +36,6 @@ public class Matrix {
             throw new IllegalArgumentException("It is not possible to create a matrix with a zero size.");
         }
 
-        rows = new Vector[array.length];
-
         int columnsQuantity = 0;
 
         for (double[] row : array) {
@@ -49,6 +47,8 @@ public class Matrix {
         if (columnsQuantity == 0) {
             throw new IllegalArgumentException("Quantity of columns is 0");
         }
+
+        rows = new Vector[array.length];
 
         for (int i = 0; i < array.length; ++i) {
             rows[i] = new Vector(columnsQuantity, array[i]);
@@ -81,12 +81,11 @@ public class Matrix {
 
     public int getColumnsQuantity() {
         return rows[0].getSize();
-        //return rows[getRowsQuantity() - 1].getSize();
     }
 
     public Vector getRow(int index) {
         if (index < 0 || index >= rows.length) {
-            throw new ArrayIndexOutOfBoundsException("Index went abroad. Your index = " + index
+            throw new IndexOutOfBoundsException("Index is out of bounds. Specified index = " + index
                     + ". Minimal index = 0. Maximal index = " + (rows.length - 1));
         }
 
@@ -95,12 +94,12 @@ public class Matrix {
 
     public void setRow(int index, Vector vector) {
         if (index < 0 || index >= rows.length) {
-            throw new ArrayIndexOutOfBoundsException("Index went abroad. Your index = "
+            throw new IndexOutOfBoundsException("Index is out of bounds. Specified index = "
                     + index + ". Minimal index = 0. Maximal index = " + (rows.length - 1));
         }
 
-        if (vector.getSize() != rows.length + 1) {
-            throw new IllegalArgumentException("The sizes are not equal");
+        if (vector.getSize() != rows[0].getSize()) {
+            throw new IllegalArgumentException("Vector size = " + vector.getSize() + ", matrix row size = " + rows[0].getSize());
         }
 
         int size = vector.getSize();
@@ -112,7 +111,7 @@ public class Matrix {
 
     public Vector getColumn(int index) {
         if (index < 0 || index >= getColumnsQuantity()) {
-            throw new ArrayIndexOutOfBoundsException("Illegal index of row. Your index = " + index
+            throw new IndexOutOfBoundsException("Illegal index of row. Specified index = " + index
                     + ". Minimal index = 0. Maximal index = " + (getColumnsQuantity() - 1));
         }
 
@@ -128,24 +127,13 @@ public class Matrix {
 
     public void transpose() {
         int columnsQuantity = getColumnsQuantity();
+        Vector[] newRows = new Vector[columnsQuantity];
 
-        Vector[] vectors = new Vector[columnsQuantity];
-
-        for (int i = 0; i < getColumnsQuantity(); i++) {
-            vectors[i] = getColumn(i);
+        for (int i = 0; i < columnsQuantity; i++) {
+            newRows[i] = getColumn(i);
         }
 
-        rows = new Vector[vectors.length];//меняем размер основной матрицы
-
-
-        for (int i = 0; i < vectors.length; ++i) {
-            rows[i] = new Vector(vectors[0].getSize()); //меняем размеры векторов
-        }
-
-        //меняем основной массив векторов
-        if (getColumnsQuantity() + 1 >= 0) {
-            System.arraycopy(vectors, 0, rows, 0, getColumnsQuantity() + 1);
-        }
+        rows = newRows;
     }
 
     public void multiplyByScalar(double scalar) {
@@ -162,51 +150,49 @@ public class Matrix {
                     - rows[0].getCoordinate(1) * rows[1].getCoordinate(0);
         }
 
-        int decompositionIndex = 0;
         double determinant = 0;
 
         for (int i = 0; i < rowsQuantity; i++) {
-            determinant += Math.pow(-1, i) * rows[i].getCoordinate(decompositionIndex) *
-                    getDeterminant(this, i, decompositionIndex);
+            determinant += Math.pow(-1, i) * rows[0].getCoordinate(i) * getDeterminant(i);
         }
 
         return determinant;
     }
 
-    private static double getDeterminant(Matrix matrix, int rowIndex, int columnIndex) {
-        int minorSize = matrix.rows.length - 1;
-        Matrix minor = new Matrix(minorSize, minorSize);
+    private double getDeterminant(int columnIndex) {
+        int minorSize = rows.length - 1;
+        Matrix minorMatrix = new Matrix(minorSize, minorSize);
 
-        for (int i = 0, columnIndexMinor = 0; i < matrix.rows.length; i++) {
-            if (i != rowIndex) {
-                for (int j = 0, rowIndexMinor = 0; j < matrix.rows.length; j++) {
-                    if (j != columnIndex) {
-                        minor.rows[columnIndexMinor].setCoordinate(rowIndexMinor, matrix.rows[i].getCoordinate(j));
-                        rowIndexMinor++;
+        int minorRow = 0;
 
-                        if (rowIndexMinor == minorSize) {
-                            rowIndexMinor = 0;
-                            columnIndexMinor++;
-                        }
-                    }
+        for (int i = 1; i < rows.length; i++) {
+            int minorColumn = 0;
+
+            for (int j = 0; j < rows.length; j++) {
+                if (j != columnIndex) {
+                    minorMatrix.rows[minorRow].setCoordinate(minorColumn, rows[i].getCoordinate(j));
+                    minorColumn++;
                 }
             }
+
+            minorRow++;
         }
 
-        return minor.getDeterminant();
+        return minorMatrix.getDeterminant();
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("{");
-        int max = rows.length - 1;
+        stringBuilder.append('{');
 
-        for (int i = 0; i < max; i++) {
+        int maxIndex = rows.length - 1;
+
+        for (int i = 0; i < maxIndex; i++) {
             stringBuilder.append(rows[i]).append(", ");
         }
 
-        stringBuilder.append(rows[max]).append("}");
+        stringBuilder.append(rows[maxIndex]).append('}');
         return stringBuilder.toString();
     }
 
@@ -214,33 +200,34 @@ public class Matrix {
         int rowsQuantity = rows.length;
         int columnsQuantity = getColumnsQuantity();
 
-        if (vector.getSize() != rows.length) {
-            throw new IllegalArgumentException("The rows quantity does not match the size. rowsQuantity = "
-                    + rowsQuantity + " columnsQuantity = " + columnsQuantity +
-                    " vector size = " + vector.getSize());
+        if (vector.getSize() != columnsQuantity) {
+            throw new IllegalArgumentException(
+                    "Matrix columns quantity = " + columnsQuantity
+                            + ", vector size = " + vector.getSize()
+            );
         }
 
-        Vector multiplyResult = new Vector(rowsQuantity);
+        Vector multiplicationResult = new Vector(rowsQuantity);
 
         for (int i = 0; i < rowsQuantity; ++i) {
-            double sum = 0;
-
-            for (int j = 0; j < columnsQuantity; ++j) {
-                sum += Vector.getScalarProduct(rows[i], vector);
-            }
-
-            multiplyResult.setCoordinate(i, sum);
+            multiplicationResult.setCoordinate(
+                    i,
+                    Vector.getScalarProduct(rows[i], vector)
+            );
         }
 
-        return multiplyResult;
+        return multiplicationResult;
     }
 
-    public void checkEqualitySizes(Matrix matrix) {
+    private void checkEqualitySizes(Matrix matrix) {
         if (rows.length != matrix.rows.length || getColumnsQuantity() != matrix.getColumnsQuantity()) {
-            throw new IllegalArgumentException("Now the dimensions of the matrix are not equal. Quantity rows matrix1 = "
-                    + rows.length + ", Quantity columns matrix1 = " + getColumnsQuantity()
-                    + ". Quantity rows matrix2 = " + matrix.rows.length
-                    + ", Quantity columns matrix2 = " + matrix.getColumnsQuantity());
+            throw new IllegalArgumentException(
+                    "Matrix dimensions are not equal. "
+                            + "Matrix 1: " + rows.length + " rows, "
+                            + getColumnsQuantity() + " columns. "
+                            + "Matrix 2: " + matrix.rows.length + " rows, "
+                            + matrix.getColumnsQuantity() + " columns."
+            );
         }
     }
 
@@ -260,15 +247,6 @@ public class Matrix {
         }
     }
 
-    public static Matrix getDifference(Matrix matrix1, Matrix matrix2) {
-        matrix1.checkEqualitySizes(matrix2);
-
-        Matrix result = new Matrix(matrix1);
-        result.subtract(matrix2);
-        return result;
-    }
-
-
     public static Matrix getSum(Matrix matrix1, Matrix matrix2) {
         matrix1.checkEqualitySizes(matrix2);
 
@@ -277,29 +255,71 @@ public class Matrix {
         return result;
     }
 
+    public static Matrix getDifference(Matrix matrix1, Matrix matrix2) {
+        matrix1.checkEqualitySizes(matrix2);
+
+        Matrix result = new Matrix(matrix1);
+        result.subtract(matrix2);
+        return result;
+    }
+
     public static Matrix getProduct(Matrix matrix1, Matrix matrix2) {
         int rowsQuantity1 = matrix1.rows.length;
-        int rowsQuantity2 = matrix2.rows.length;
         int columnsQuantity1 = matrix1.getColumnsQuantity();
+        int rowsQuantity2 = matrix2.rows.length;
         int columnsQuantity2 = matrix2.getColumnsQuantity();
 
-        if (rowsQuantity1 != columnsQuantity2 && rowsQuantity2 != columnsQuantity1) {
-            throw new IllegalArgumentException("The rows quantity does not match the size. rowsQuantity1 = "
-                    + rowsQuantity1 + ", columnsQuantity1 = " + columnsQuantity1 +
-                    ", rowsQuantity2" + rowsQuantity2 + ", columnsQuantity2" + columnsQuantity2);
+        if (columnsQuantity1 != rowsQuantity2) {
+            throw new IllegalArgumentException("Matrix 1 columns quantity = " + columnsQuantity1 + ", matrix 2 rows quantity = " + rowsQuantity2
+            );
         }
 
-        int productRowsQuantity = Math.max(rowsQuantity1, rowsQuantity2);
-        int productColumnsQuantity = Math.max(columnsQuantity1, columnsQuantity2);
-
-        Matrix product = new Matrix(productRowsQuantity, productColumnsQuantity);
+        Matrix product = new Matrix(rowsQuantity1, columnsQuantity2);
 
         for (int i = 0; i < rowsQuantity1; ++i) {
-            for (int j = 0; j < rowsQuantity2; ++j) {
-                product.rows[i].setCoordinate(j, Vector.getScalarProduct(matrix1.rows[i], matrix2.getColumn(j)));
+            for (int j = 0; j < columnsQuantity2; ++j) {
+                product.rows[i].setCoordinate(j, Vector.getScalarProduct(matrix1.rows[i], matrix2.getColumn(j))
+                );
             }
         }
 
         return product;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+
+        if (!(object instanceof Matrix)) {
+            return false;
+        }
+
+        Matrix matrix = (Matrix) object;
+
+        if (rows.length != matrix.rows.length
+                || getColumnsQuantity() != matrix.getColumnsQuantity()) {
+            return false;
+        }
+
+        for (int i = 0; i < rows.length; ++i) {
+            if (!rows[i].equals(matrix.rows[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+
+        for (Vector row : rows) {
+            result = 31 * result + row.hashCode();
+        }
+
+        return result;
     }
 }
