@@ -1,4 +1,4 @@
-package ru.academits.findyurov.range;
+package ru.academits.findyurov.shapes.range;
 
 public class Range {
     private double from;

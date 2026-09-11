@@ -1,4 +1,4 @@
-package ru.academits.findyurov;
+package ru.academits.findyurov.shapes;
 
 import java.util.Arrays;
 

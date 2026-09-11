@@ -1,4 +1,4 @@
-package ru.academits.findyurov;
+package ru.academits.findyurov.shapes.shape;
 
 public class Circle implements Shape {
     private final double radius;

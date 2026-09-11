@@ -1,7 +1,7 @@
-package ru.academits.findyurov.main;
+package ru.academits.findyurov.shapes.main;
 
-import ru.academits.findyurov.Matrix;
-import ru.academits.findyurov.Vector;
+import ru.academits.findyurov.shapes.Matrix;
+import ru.academits.findyurov.shapes.Vector;
 
 import java.util.Arrays;
 

@@ -1,8 +1,6 @@
-package ru.academits.findyurov.main;
+package ru.academits.findyurov.shapes.main;
 
-import ru.academits.findyurov.Vector;
-
-import java.util.Arrays;
+import ru.academits.findyurov.shapes.Vector;
 
 public class  Main {
     public static void main(String[] args) {

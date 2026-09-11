@@ -1,4 +1,4 @@
-package ru.academits.findyurov;
+package ru.academits.findyurov.shapes.shape;
 
 public class Triangle implements Shape {
     private final double x1;
@@ -59,12 +59,14 @@ public class Triangle implements Shape {
 
     @Override
     public double getWidth() {
-        return getMax(x1, x2, x3) - getMin(x1, x2, x3);
+        return Math.max(x1, Math.max(x2, x3))
+                - Math.min(x1, Math.min(x2, x3));
     }
 
     @Override
     public double getHeight() {
-        return getMax(y1, y2, y3) - getMin(y1, y2, y3);
+        return Math.max(y1, Math.max(y2, y3))
+                - Math.min(y1, Math.min(y2, y3));
     }
 
     @Override
@@ -75,9 +77,10 @@ public class Triangle implements Shape {
 
         double halfPerimeter = (side1Length + side2Length + side3Length) / 2;
 
-        return Math.sqrt(halfPerimeter * (halfPerimeter - side1Length) * (halfPerimeter - getSide2Length())
-                * (halfPerimeter - getSide3Length()));
+        return Math.sqrt(halfPerimeter * (halfPerimeter - side1Length) * (halfPerimeter - side2Length)
+                * (halfPerimeter - side3Length));
     }
+
 
     @Override
     public double getPerimeter() {
@@ -117,29 +120,5 @@ public class Triangle implements Shape {
     public String toString() {
         return "Triangle: (" + x1 + "; " + y1 + "), ("
                 + x2 + "; " + y2 + "), (" + x3 + "; " + y3 + ")";
-    }
-
-    private static double getMax(double... numbers) {
-        double max = numbers[0];
-
-        for (double number : numbers) {
-            if (number > max) {
-                max = number;
-            }
-        }
-
-        return max;
-    }
-
-    private static double getMin(double... numbers) {
-        double min = numbers[0];
-
-        for (double number : numbers) {
-            if (number < min) {
-                min = number;
-            }
-        }
-
-        return min;
     }
 }

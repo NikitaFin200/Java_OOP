@@ -1,6 +1,6 @@
-package ru.academits.findyurov.comparators;
+package ru.academits.findyurov.shapes.comparators;
 
-import ru.academits.findyurov.Shape;
+import ru.academits.findyurov.shapes.shape.Shape;
 
 import java.util.Comparator;
 

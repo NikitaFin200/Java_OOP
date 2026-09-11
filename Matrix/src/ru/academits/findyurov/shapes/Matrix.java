@@ -1,6 +1,4 @@
-package ru.academits.findyurov;
-
-import ru.academits.findyurov.Vector;
+package ru.academits.findyurov.shapes;
 
 public class Matrix {
     private Vector[] rows;

@@ -1,12 +1,8 @@
-package ru.academits.findyurov;
+package ru.academits.findyurov.shapes;
 
-import ru.academits.findyurov.Shape;
-import ru.academits.findyurov.Circle;
-import ru.academits.findyurov.Rectangle;
-import ru.academits.findyurov.Square;
-import ru.academits.findyurov.Triangle;
-import ru.academits.findyurov.comparators.ShapeAreaComparator;
-import ru.academits.findyurov.comparators.ShapePerimeterComparator;
+import ru.academits.findyurov.shapes.comparators.ShapeAreaComparator;
+import ru.academits.findyurov.shapes.comparators.ShapePerimeterComparator;
+import ru.academits.findyurov.shapes.shape.*;
 
 import java.util.Arrays;
 
