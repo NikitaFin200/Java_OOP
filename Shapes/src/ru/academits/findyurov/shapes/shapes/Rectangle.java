@@ -1,4 +1,4 @@
-package ru.academits.findyurov.shapes.shape;
+package ru.academits.findyurov.shapes.shapes;
 
 public class Rectangle implements Shape {
     private final double width;

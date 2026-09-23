@@ -1,4 +1,4 @@
-package ru.academits.findyurov.shapes.shape;
+package ru.academits.findyurov.shapes.shapes;
 
 public class Triangle implements Shape {
     private final double x1;
@@ -81,7 +81,6 @@ public class Triangle implements Shape {
                 * (halfPerimeter - side3Length));
     }
 
-
     @Override
     public double getPerimeter() {
         return getSide1Length() + getSide2Length() + getSide3Length();
@@ -113,6 +112,7 @@ public class Triangle implements Shape {
         hash = prime * hash + Double.hashCode(y1);
         hash = prime * hash + Double.hashCode(y2);
         hash = prime * hash + Double.hashCode(y3);
+
         return hash;
     }
 

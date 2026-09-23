@@ -1,8 +1,8 @@
-package ru.academits.findyurov.shapes;
+package ru.academits.findyurov.shapes.main;
 
 import ru.academits.findyurov.shapes.comparators.ShapeAreaComparator;
 import ru.academits.findyurov.shapes.comparators.ShapePerimeterComparator;
-import ru.academits.findyurov.shapes.shape.*;
+import ru.academits.findyurov.shapes.shapes.*;
 
 import java.util.Arrays;
 
@@ -27,8 +27,8 @@ public class Main {
         }
 
         if (shapes.length < 2) {
-            throw new IllegalArgumentException("Array size is incorrect and is equal to = " + shapes.length
-                    + "The array must be >= 2.");
+            throw new IllegalArgumentException("Array size is incorrect. And is equal to " + shapes.length
+                    + " The array length must be >= 2.");
         }
 
         Arrays.sort(shapes, new ShapePerimeterComparator());

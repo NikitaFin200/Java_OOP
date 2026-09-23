@@ -1,4 +1,4 @@
-package ru.academits.findyurov.shapes.shape;
+package ru.academits.findyurov.shapes.shapes;
 
 public interface Shape {
     double getArea();
